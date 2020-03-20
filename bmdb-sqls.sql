@@ -3,6 +3,16 @@ select * from actor;
 select * from movie;
 select * from credit;
 
+-- testing unload
+select * from movie
+  INTO OUTFILE '/C/repos-202003jbc/test.csv';
+
+SHOW VARIABLES LIKE "secure_file_priv";
+
+select * from movie
+  INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/movie.csv';
+
+
 -- 3 Table Join to Select Actors and associated Movies (all columns)
 select * 
  from actor a
@@ -46,3 +56,12 @@ select * from movie where rating = 'R';
 
 -- Select movies from years 2000-present
 select * from movie where year >= 2000;
+
+-- Left join Movie - Credit
+--  We have added Jurassic park movie but it isn't present in credits
+select m.title, m.year, c.role
+  from movie m
+  left join credit c
+    on m.ID = c.MovieID;
+  
+
